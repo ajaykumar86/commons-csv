@@ -1,4 +1,17 @@
+machine:
+  java:
+    version: openjdk7
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+    - mv config/.app.yml config/app.yml
+dependencies:
+ pre:
+    - mvn clean verify
+    - mvn dependency:resolve
+compile:
 test:
- post:
-   - mkdir -p $CIRCLE_TEST_REPORTS/junit1/
-   - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit2/
+    - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \
